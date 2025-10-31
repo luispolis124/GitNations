@@ -1,0 +1,35 @@
+/* css/nation.css */
+
+/* Estilo para a pré-visualização de bandeiras no formulário */
+#bandeira-preview {
+    width: 100%;
+    height: 150px;
+    border: 1px dashed #ced4da;
+    background-color: #e9ecef;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: #6c757d;
+}
+
+#flag-display {
+    width: 100%;
+    max-width: 300px; /* Limite o tamanho do display de bandeira no painel */
+    height: 200px;
+    border: 1px solid #ced4da;
+    margin-bottom: 20px;
+    background-color: #f0f0f0;
+    /* Aqui, uma imagem de bandeira seria carregada via JS como background-image ou <img> */
+}
+
+/* Estilo para a lista/tabela de membros da organização */
+#cgg-members ul {
+    list-style-type: none;
+}
+
+#cgg-members li {
+    padding: 5px 0;
+    border-bottom: 1px dotted #e9ecef;
+}
