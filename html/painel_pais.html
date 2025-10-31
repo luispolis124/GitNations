@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Controle - GitNations</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/game.css">
+</head>
+<body>
+    <header>
+        <h1 id="nation-title">Carregando Nação...</h1>
+    </header>
+
+    <main id="nation-panel">
+        
+        <section id="overview" class="panel-section">
+            <h2>Visão Geral</h2>
+            <div id="flag-display" class="nation-flag">
+                </div>
+            <p><strong>Capital:</strong> <span id="info-capital"></span></p>
+            <p><strong>Fundador:</strong> <span id="info-fundador"></span></p>
+            <p><strong>Data de Fundação:</strong> <span id="info-fundacao"></span></p>
+        </section>
+
+        <section id="government" class="panel-section">
+            <h2>Governo e Identidade</h2>
+            <p><strong>Tipo de Governo:</strong> <span id="info-governo"></span></p>
+            <p><strong>Presidente/Líder:</strong> <span id="info-lider">Não definido</span></p>
+            <p><strong>Lema Nacional:</strong> <span id="info-lema"></span></p>
+            </section>
+
+        <section id="stats" class="panel-section">
+            <h2>Estatísticas Globais</h2>
+            <p><strong>População:</strong> <span id="stat-populacao"></span></p>
+            <p><strong>PIB:</strong> <span id="stat-pib"></span></p>
+            <p><strong>IDH:</strong> <span id="stat-idh"></span></p>
+            </section>
+
+        <section id="actions" class="panel-section">
+            <h2>Ações de Governo</h2>
+            <a href="ficha_do_pais.html?edit=true" class="button-action">Editar Ficha (PR)</a>
+            <button class="button-action">Propor Lei</button>
+            <button class="button-action">Acessar CGG</button>
+        </section>
+
+    </main>
+
+    <script src="../js/panel_nation.js"></script>
+    </body>
+</html>
