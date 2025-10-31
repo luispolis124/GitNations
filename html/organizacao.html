@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conselho Global de Governança (CGG)</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Conselho Global de Governança (CGG)</h1>
+        <p>A Assembleia das Nações do GitNations. Paz, Comércio e Simulação.</p>
+    </header>
+
+    <main>
+        <section id="cgg-mission">
+            <h2>Missão do CGG</h2>
+            <p>O Conselho Global de Governança é a entidade diplomática que visa promover a estabilidade, a cooperação e o realismo entre as nações fictícias. Atuamos como mediadores em conflitos (Issues no GitHub), reguladores de comércio (Pull Requests de tratados) e validadores de mudanças constitucionais.</p>
+            <p>Todas as decisões e tratados do CGG são registrados no <a href="#" id="cgg-repo-link">Repositório Oficial do CGG no GitHub</a>, garantindo transparência total.</p>
+        </section>
+
+        <section id="cgg-members">
+            <h2>Nações Membro</h2>
+            <p>Atualmente, <strong id="member-count">0</strong> nações são membros ativos do CGG (Todas as nações fundadas).</p>
+            <button onclick="window.location.href='ranking.html'">Ver Lista Completa de Membros</button>
+        </section>
+
+        <section id="cgg-documents">
+            <h2>Documentos e Atos Oficiais</h2>
+            <ul>
+                <li><a href="#">Carta Fundadora do CGG (Versão 1.0)</a></li>
+                <li><a href="#">Regulamento de Comércio Inter-Nacional</a></li>
+                <li><a href="#">Procedimento para Declaração de Conflito (Issues)</a></li>
+            </ul>
+        </section>
+    </main>
+    
+    <script src="../js/script.js"></script>
+    <script>
+        // Placeholder para a lógica de contagem de membros (será integrada com nation_users.js)
+        document.getElementById('cgg-repo-link').href = `https://github.com/GitNations/DadosGlobais`;
+    </script>
+</body>
+</html>
