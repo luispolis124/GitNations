@@ -1,0 +1,92 @@
+# .github/workflows/turno_global.yml
+
+name: ⚙️ Turno Global do GitNations
+
+# 1. Gatilhos: Quando este fluxo de trabalho será executado
+on:
+  # Rodar o turno automaticamente todos os dias à meia-noite UTC (Ajuste o horário conforme a necessidade)
+  schedule:
+    - cron: '0 0 * * *'
+  
+  # Permite rodar o fluxo de trabalho manualmente através da aba "Actions" do GitHub
+  workflow_dispatch:
+
+# 2. Permissões
+# É crucial dar permissão de escrita ao GITHUB_TOKEN para que o script possa COMMITAR
+# as atualizações dos arquivos JSON das nações de volta ao repositório.
+permissions:
+  contents: write # Permissão para commitar e criar arquivos
+  pull-requests: write # Necessário se o motor for enviar PRs em vez de commits diretos
+
+# 3. Definição do Job
+jobs:
+  run_simulation_turn:
+    name: Rodar o Motor de Simulação
+    runs-on: ubuntu-latest # O sistema operacional que rodará o script
+
+    steps:
+      # Passo 1: Fazer o checkout do código do repositório
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
+        with:
+          # É importante que o token tenha as permissões corretas (contents: write)
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      # Passo 2: Configurar o ambiente Node.js
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' 
+          
+      # Passo 3: Instalar as dependências do projeto (se houver, como 'node-fetch' para o JS)
+      # Se você usar 'fetch' nativo do Node 18+, pode pular esta etapa ou usar 'npm install'.
+      - name: Instalar Dependências (Simulado)
+        run: echo "Nenhuma dependência instalada no momento."
+        # run: npm install
+
+      # Passo 4: Rodar o script principal de simulação
+      - name: Executar o Turno Global (Node.js)
+        # Chamamos o script game.js e a função runGlobalTurn
+        # Usamos 'node' para executar o JS diretamente.
+        # Você deve garantir que 'js/game.js' tenha um método que possa ser chamado/exportado
+        # para iniciar o runGlobalTurn, ou apenas executar o arquivo.
+        run: |
+          # Simulação: Criar um wrapper para executar a função que precisa rodar
+          # Aqui, usaremos o Node para executar um pequeno script que importa e roda a função:
+          echo "Rodando simulação..."
+          node -e '
+            const { runGlobalTurn } = require("./js/game.js");
+            runGlobalTurn().catch(err => {
+              console.error("Erro no Turno Global:", err);
+              process.exit(1);
+            });
+          '
+          
+      # Passo 5: Configurar o usuário Git (para o commit)
+      - name: Configurar Credenciais do Git
+        run: |
+          git config user.name "GitNations Bot (Ação Automatizada)"
+          git config user.email "gitnations-bot@users.noreply.github.com"
+
+      # Passo 6: Verificar e Commitar as Mudanças (as atualizações dos JSONs)
+      - name: Commitar Atualizações de Estatísticas
+        id: commit
+        run: |
+          # Adiciona todos os arquivos JSON que foram alterados pelo game.js
+          git add --all nations/*.json
+          
+          # Verifica se há algo para commitar
+          if git diff --staged --quiet; then
+            echo "::set-output name=pode_commitar::false"
+            echo "Nenhuma mudança nas nações para commitar."
+          else
+            echo "::set-output name=pode_commitar::true"
+            git commit -m "🤖 Turno Global: Estatísticas Atualizadas [skip ci]"
+            echo "Alterações committadas com sucesso."
+          fi
+          
+      # Passo 7: Enviar as alterações para o repositório
+      - name: Fazer Push das Mudanças
+        # Só faz o push se o passo 6 tiver detectado alterações
+        if: steps.commit.outputs.pode_commitar == 'true'
+        run: git push
