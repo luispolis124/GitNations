@@ -1,1 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criação de Nação - GitNations</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/nation.css">
+</head>
+<body>
+    <header>
+        <h1>Crie sua Nação Fictícia</h1>
+        <p>Defina a fundação de seu país.</p>
+    </header>
 
+    <main>
+        <form id="nation-creation-form">
+            <fieldset>
+                <legend>Dados Essenciais</legend>
+                <label for="nome-pais">Nome do País:</label>
+                <input type="text" id="nome-pais" required>
+                
+                <label for="capital">Capital:</label>
+                <input type="text" id="capital" required>
+
+                <label for="tipo-governo">Tipo de Governo:</label>
+                <select id="tipo-governo">
+                    <option value="Democracia">Democracia</option>
+                    <option value="Monarquia">Monarquia</option>
+                    <option value="Ditadura">Ditadura</option>
+                    </select>
+            </fieldset>
+
+            <fieldset>
+                <legend>Símbolos Nacionais</legend>
+                <label for="bandeira">Bandeira (Reupload/URL):</label>
+                <input type="file" id="bandeira" accept="image/*">
+                <div id="bandeira-preview"></div>
+                
+                <label for="lema">Lema Nacional:</label>
+                <input type="text" id="lema">
+                
+                <label for="hino">Hino Nacional (Link para GitHub Gist/Arquivo):</label>
+                <input type="url" id="hino">
+            </fieldset>
+
+            <button type="submit">Fundar Nação e Enviar ao CGG (Pull Request)</button>
+        </form>
+    </main>
+    
+    <script src="../js/creation_nation_user.js"></script>
+    <script src="../js/nation_users.js"></script>
+</body>
+</html>
