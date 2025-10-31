@@ -1,0 +1,86 @@
+/* css/style.css */
+
+/* Reset Básico para consistência */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Variáveis de Tema (Fácil personalização!) */
+:root {
+    --color-primary: #007bff; /* Azul (Sugestão: Cor de Governo/Tecnologia) */
+    --color-secondary: #28a745; /* Verde (Sugestão: Sucesso/Crescimento) */
+    --color-background: #f8f9fa; /* Fundo claro */
+    --color-text: #343a40; /* Texto escuro */
+    --color-card-bg: #ffffff; /* Fundo de cartões */
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.6;
+    padding-top: 60px; /* Espaço para o header fixo, se houver */
+}
+
+/* Estrutura do Header */
+header {
+    background-color: var(--color-card-bg);
+    color: var(--color-text);
+    padding: 15px 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 1.8em;
+    color: var(--color-primary);
+}
+
+/* Estrutura do Main */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estilo Básico de Botões e Links */
+.button-link, button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--color-primary);
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-link:hover, button:hover {
+    background-color: #0056b3; /* Tom mais escuro */
+}
+
+/* Estilo para Formulários */
+input[type="text"], input[type="url"], input[type="file"], select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+fieldset {
+    border: 1px solid #ced4da;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+legend {
+    font-weight: bold;
+    color: var(--color-primary);
+    padding: 0 10px;
+}
