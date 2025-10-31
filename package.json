@@ -1,0 +1,10 @@
+// package.json (na raiz)
+{
+  "name": "gitnations-engine",
+  "version": "1.0.0",
+  "description": "Motor de simulação para GitNations",
+  "main": "js/game.js",
+  "scripts": {
+    "start-turn": "node -e 'require(\"./js/game\").runGlobalTurn()'"
+  }
+}
