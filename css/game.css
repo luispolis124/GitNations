@@ -1,0 +1,73 @@
+/* css/game.css */
+
+/* Layout do Painel (painel_pais.html) */
+#nation-panel {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Duas colunas: Stats grandes e uma para ações */
+    gap: 30px;
+}
+
+.panel-section {
+    background-color: var(--color-card-bg);
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.panel-section h2 {
+    color: var(--color-primary);
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 5px;
+}
+
+/* Estilos de Estatísticas (Stats) */
+#stats p {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+}
+
+#stats strong {
+    font-weight: bold;
+    color: var(--color-text);
+}
+
+/* Estilos para Ações (Botões) */
+#actions {
+    grid-column: 1 / span 2; /* Ocupa as duas colunas em telas menores */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.button-action {
+    background-color: var(--color-secondary);
+}
+
+.button-action:hover {
+    background-color: #1e7e34;
+}
+
+/* Estilos da Tabela de Ranking */
+#nation-ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#nation-ranking-table th, #nation-ranking-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+#nation-ranking-table th {
+    background-color: #e9ecef;
+    color: var(--color-text);
+    font-weight: bold;
+}
+
+.sortable {
+    cursor: pointer;
+    user-select: none;
+}
