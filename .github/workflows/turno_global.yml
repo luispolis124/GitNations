@@ -1,5 +1,3 @@
-# .github/workflows/turno_global.yml
-
 name: ⚙️ Turno Global do GitNations
 
 # 1. Gatilhos: Quando este fluxo de trabalho será executado
@@ -16,7 +14,6 @@ on:
 # as atualizações dos arquivos JSON das nações de volta ao repositório.
 permissions:
   contents: write # Permissão para commitar e criar arquivos
-  pull-requests: write # Necessário se o motor for enviar PRs em vez de commits diretos
 
 # 3. Definição do Job
 jobs:
@@ -29,11 +26,53 @@ jobs:
       - name: Checkout do Repositório
         uses: actions/checkout@v4
         with:
-          # É importante que o token tenha as permissões corretas (contents: write)
           token: ${{ secrets.GITHUB_TOKEN }}
           
       # Passo 2: Configurar o ambiente Node.js
       - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Use uma versão LTS estável
+          
+      # Passo 3: Instalar as dependências do projeto
+      # AGORA USAMOS NPM INSTALL de fato, lendo o package.json
+      - name: Instalar Dependências
+        run: npm install
+
+      # Passo 4: Rodar o script principal de simulação
+      # AGORA USAMOS O SCRIPT DEFINIDO NO package.json
+      - name: Executar o Turno Global (Node.js)
+        run: npm run start-turn
+          
+      # Passo 5: Configurar o usuário Git (para o commit)
+      - name: Configurar Credenciais do Git
+        run: |
+          git config user.name "GitNations Bot (Ação Automatizada)"
+          git config user.email "gitnations-bot@users.noreply.github.com"
+
+      # Passo 6: Verificar e Commitar as Mudanças (as atualizações dos JSONs)
+      # Nota: Usando 'env' para definir a saída de forma moderna no GitHub Actions
+      - name: Commitar Atualizações de Estatísticas
+        id: commit
+        run: |
+          # Adiciona todos os arquivos JSON que foram alterados pelo game.js
+          git add --all nations/*.json
+          
+          # Verifica se há algo para commitar
+          if git diff --staged --quiet; then
+            echo "pode_commitar=false" >> $GITHUB_OUTPUT
+            echo "Nenhuma mudança nas nações para commitar."
+          else
+            echo "pode_commitar=true" >> $GITHUB_OUTPUT
+            git commit -m "🤖 Turno Global: Estatísticas Atualizadas [skip ci]"
+            echo "Alterações committadas com sucesso."
+          fi
+          
+      # Passo 7: Enviar as alterações para o repositório
+      - name: Fazer Push das Mudanças
+        # Só faz o push se o passo 6 tiver detectado alterações
+        if: steps.commit.outputs.pode_commitar == 'true'
+        run: git push
         uses: actions/setup-node@v4
         with:
           node-version: '20' 
