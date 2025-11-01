@@ -5,6 +5,9 @@
   "description": "Motor de simulação para GitNations",
   "main": "js/game.js",
   "scripts": {
-    "start-turn": "node -e 'require(\"./js/game\").runGlobalTurn()'"
+    "start-turn": "node js/game.js" 
+  },
+  "dependencies": {
+    // Adicione dependências futuras aqui (ex: octokit, probot)
   }
 }
