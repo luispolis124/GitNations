@@ -1,9 +1,9 @@
 {
-  "name": "gitnations-engine",
+  "name": "gitnations",
   "version": "1.0.0",
-  "description": "Motor de simulação para GitNations",
+  "description": "O Jogo de Simulação de Governo via GitHub",
   "main": "js/game.js",
   "scripts": {
-    "start-turn": "node js/game.js" 
+    "start-turn": "node js/game.js"
   }
 }
