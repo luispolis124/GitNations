@@ -16,11 +16,9 @@
         <h2>Acesse ou Crie sua Nação</h2>
         <section id="login">
             <h3>Login</h3>
-            <form>
-                <input type="text" placeholder="Seu Usuário GitNations/GitHub">
-                <button type="submit">Entrar</button>
+            <form id="login-form"> <input type="text" id="username-input" placeholder="Seu Usuário GitNations/GitHub" required> <button type="submit">Entrar</button>
             </form>
-        </section>
+            <p id="login-message" style="color: red;"></p> </section>
         
         <section id="register">
             <h3>Novo Jogador</h3>
@@ -30,6 +28,7 @@
         </section>
     </main>
 
+    <script src="../js/nation_users.js"></script> 
     <script src="../js/script.js"></script>
 </body>
 </html>
