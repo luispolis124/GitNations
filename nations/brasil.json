@@ -1,0 +1,16 @@
+{
+  "id": "brasil",
+  "nome": "República Federativa do Brasil",
+  "tipo_governo": "República",
+  "proprietario_github": "luispolis124",
+  "estatisticas": {
+    "populacao": 217000000,
+    "pib": 1600000000000,
+    "idh": 0.765,
+    "imposto_base": 0.25,
+    "tecnologia": 50,
+    "militar": 150000
+  },
+  "historico_leis": [],
+  "status_diplomatico": {}
+}
