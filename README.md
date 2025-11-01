@@ -1,3 +1,24 @@
+{
+  "id": "brasil",
+  "nome": "República do Brasil",
+  "tipo_governo": "Democracia",
+  "proprietario_github": "luispolis124",
+  "estatisticas": {
+    "populacao": 215000000,
+    "pib": 1800000000000,
+    "idh": 0.765,
+    "imposto_base": 0.15,
+    "tecnologia": 50,
+    "militar": 50
+  }
+}
+```eof
+
+### 2. Arquivo `README.md` Atualizado
+
+Aqui está o `README.md` completo, com o link corrigido e a seção final explicando a **motivação do projeto**.
+
+```markdown
 # 🌍 GitNations: O Jogo de Simulação de Governo via GitHub
 
 
@@ -73,6 +94,29 @@ O coração do GitNations é totalmente automatizado:
 * **Execução:** Um **GitHub Action** (definido em `turno_global.yml`) roda o script `game.js` todos os dias (ou a cada 24h).
 * **Função:** O motor lê todos os arquivos JSON em `/nations/`, calcula o crescimento de **População**, **PIB** e **IDH** com base no `tipo_governo` e nas **Leis** ativas.
 * **Resultado:** O Action commita as estatísticas atualizadas de volta para o repositório, mantendo o histórico de jogo no histórico do Git.
+
+---
+
+## 🧠 Motivação do Projeto: Por que Desenvolvemos o GitNations?
+
+O GitNations serve como uma **prova de conceito** e uma experiência de aprendizado para:
+
+* **Gamificação do Git:** Mostrar como ferramentas de desenvolvimento (Git, PRs, Issues) podem ser transformadas em uma plataforma de jogo.
+* **Automação Extrema:** Demonstrar o poder e a versatilidade do **GitHub Actions** para executar lógica de jogo de longa duração sem a necessidade de um servidor tradicional.
+* **Governança Aberta:** Simular um sistema de governo descentralizado e transparente, onde toda decisão e mudança de estado são rastreadas e auditáveis no histórico do Git.
+
+---
+
+## 🔗 Links Úteis
+
+* **Painel de Nações/Ranking:** [https://luispolis124.github.io/GitNations/html/index.html](https://luispolis124.github.io/GitNations/html/index.html)
+* **Motor de Simulação:** [js/game.js](js/game.js)
+* **Modelos de Nação:** [nations/](nations/)
+* **Status do Turno Global:** [Link para a aba 'Actions']
+
+---
+
+👋 **Junte-se a nós e comece a governar sua nação!*** **Resultado:** O Action commita as estatísticas atualizadas de volta para o repositório, mantendo o histórico de jogo no histórico do Git.
 
 ---
 
