@@ -1,67 +1,59 @@
 # .github/workflows/deploy_site.yml
 
-name: 🌐 Implantação do GitHub Pages
+name: 🌐 Implantação do Site (GitHub Pages)
 
-# 1. Gatilhos: Quando este fluxo de trabalho será executado
+# 1. Gatilhos: Define o que inicia o workflow
 on:
   push:
     branches:
-      - main # Roda sempre que houver um push para o branch principal
+      - main # Roda automaticamente em commits para o branch principal
   
-  # Permite rodar o fluxo de trabalho manualmente
+  # Permite que o workflow seja disparado manualmente pela aba 'Actions'
   workflow_dispatch:
 
-# 2. Permissões
-# O GitHub precisa dessas permissões específicas para o Pages funcionar corretamente.
+# 2. Permissões: Essenciais para interagir com o Pages
 permissions:
-  contents: read
-  pages: write 
-  id-token: write 
+  contents: read # Permite o checkout do código
+  pages: write # Permissão para publicar o site
+  id-token: write # Permissão para autenticação segura (OIDC)
 
 # 3. Definição do Job
 jobs:
-  # Job de Implantação no GitHub Pages
   deploy:
-    name: Implantação Estática
+    name: Publicar Conteúdo Estático
     environment:
-      # O ambiente deve ser 'github-pages' para o GitHub reconhecer o deploy
+      # Liga o job ao ambiente de implantação 'github-pages'
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }} 
     runs-on: ubuntu-latest
 
     steps:
-      # Passo 1: Fazer o checkout do código do repositório
-      - name: Checkout
+      # Passo 1: Obter o Código
+      - name: Checkout do Repositório
         uses: actions/checkout@v4
+        
+      # Passo 2 (OPCIONAL): Etapa de Build do Projeto (Comente ou remova se o site for apenas HTML/CSS/JS)
+      # Se você usasse Webpack, Grunt ou Jekyll, você faria o build aqui.
+      # - name: Configurar Node.js (Se necessário para build)
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: '20'
+      # - name: Executar o Build
+      #   run: npm install && npm run build # Exemplo de build
 
-      # Passo 2 (Opcional): Configurar o Node.js. Mantido apenas se você for usar um build.
-      - name: Configurar Node.js (Opcional)
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      # Passo 3: Configurar o GitHub Pages
+      # Passo 3: Configurar o Pages e Preparar a Implantação
       - name: Configurar GitHub Pages
-        # Este action configura os caminhos e variáveis necessários
         uses: actions/configure-pages@v4
         
-      # Passo 4 (Opcional): Etapa de Build
-      - name: Build do Projeto (Opcional - Remova se for 100% estático)
-        run: |
-          # Se o seu site for puramente HTML/CSS/JS, esta etapa não faz nada além de confirmar
-          echo "Nenhuma etapa de build complexa, usando arquivos estáticos da raiz."
-
-      # Passo 5: Enviar os arquivos para o GitHub Pages como um artefato
-      # O action 'upload-pages-artifact' pega o conteúdo da pasta 'path' 
-      # e o prepara para ser servido.
-      - name: Upload Artifact
+      # Passo 4: Empacotar os Arquivos para Implantação (Cria o Artefato)
+      - name: Empacotar e Fazer Upload do Site
         uses: actions/upload-pages-artifact@v3
         with:
-          # A pasta que será publicada. Assumimos a raiz do repositório
+          # O caminho para a pasta que contém o seu index.html e outros assets.
+          # Assumimos que está na raiz do repositório (./)
           path: './' 
 
-      # Passo 6: Publicar o Site
+      # Passo 5: Implantar o Site (Publicar)
       - name: Implantar no GitHub Pages
         id: deployment
-        # Este action finaliza o processo e coloca o site online
         uses: actions/deploy-pages@v4
