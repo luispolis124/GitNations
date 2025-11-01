@@ -1,4 +1,3 @@
-// package.json (na raiz)
 {
   "name": "gitnations-engine",
   "version": "1.0.0",
@@ -6,8 +5,5 @@
   "main": "js/game.js",
   "scripts": {
     "start-turn": "node js/game.js" 
-  },
-  "dependencies": {
-    // Adicione dependências futuras aqui (ex: octokit, probot)
   }
 }
