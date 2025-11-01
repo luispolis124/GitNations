@@ -116,17 +116,4 @@ O GitNations serve como uma **prova de conceito** e uma experiência de aprendiz
 
 ---
 
-👋 **Junte-se a nós e comece a governar sua nação!*** **Resultado:** O Action commita as estatísticas atualizadas de volta para o repositório, mantendo o histórico de jogo no histórico do Git.
-
----
-
-## 🔗 Links Úteis
-
-* **Painel de Nações/Ranking:** [Sua URL do GitHub Pages Aqui] (Onde o jogo é visualizado)
-* **Motor de Simulação:** [js/game.js](js/game.js)
-* **Modelos de Nação:** [nations/](nations/)
-* **Status do Turno Global:** [Link para a aba 'Actions']
-
----
-
 👋 **Junte-se a nós e comece a governar sua nação!**
