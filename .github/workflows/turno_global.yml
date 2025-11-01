@@ -1,131 +1,44 @@
 name: ⚙️ Turno Global do GitNations
 
-# 1. Gatilhos: Quando este fluxo de trabalho será executado
+# 1. Agendamento e Gatilhos: Roda diariamente e permite acionamento manual
 on:
-  # Rodar o turno automaticamente todos os dias à meia-noite UTC (Ajuste o horário conforme a necessidade)
   schedule:
-    - cron: '0 0 * * *'
-  
-  # Permite rodar o fluxo de trabalho manualmente através da aba "Actions" do GitHub
+    # Roda todos os dias à meia-noite UTC (Ajuste para seu fuso se necessário)
+    - cron: '0 0 * * *' 
   workflow_dispatch:
+    # Permite rodar manualmente a partir da aba Actions
 
-# 2. Permissões
-# É crucial dar permissão de escrita ao GITHUB_TOKEN para que o script possa COMMITAR
-# as atualizações dos arquivos JSON das nações de volta ao repositório.
-permissions:
-  contents: write # Permissão para commitar e criar arquivos
-
-# 3. Definição do Job
 jobs:
-  run_simulation_turn:
-    name: Rodar o Motor de Simulação
-    runs-on: ubuntu-latest # O sistema operacional que rodará o script
+  run_game_turn:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write # ESSENCIAL: Permite que o Action faça commit dos arquivos JSON atualizados
 
     steps:
-      # Passo 1: Fazer o checkout do código do repositório
-      - name: Checkout do Repositório
+      - name: 📥 Checkout do Repositório
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          
-      # Passo 2: Configurar o ambiente Node.js
-      - name: Configurar Node.js
+          # É preciso fazer um fetch do histórico completo para o commit funcionar
+          fetch-depth: 0 
+
+      - name: 🔧 Configurar Node.js (v20)
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Use uma versão LTS estável
-          
-      # Passo 3: Instalar as dependências do projeto
-      # AGORA USAMOS NPM INSTALL de fato, lendo o package.json
-      - name: Instalar Dependências
-        run: npm install
+          node-version: 20
 
-      # Passo 4: Rodar o script principal de simulação
-      # AGORA USAMOS O SCRIPT DEFINIDO NO package.json
-      - name: Executar o Turno Global (Node.js)
-        run: npm run start-turn
-          
-      # Passo 5: Configurar o usuário Git (para o commit)
-      - name: Configurar Credenciais do Git
-        run: |
-          git config user.name "GitNations Bot (Ação Automatizada)"
-          git config user.email "gitnations-bot@users.noreply.github.com"
+      - name: 📦 Instalar Dependências
+        run: npm install # Se você tiver dependências no package.json
 
-      # Passo 6: Verificar e Commitar as Mudanças (as atualizações dos JSONs)
-      # Nota: Usando 'env' para definir a saída de forma moderna no GitHub Actions
-      - name: Commitar Atualizações de Estatísticas
-        id: commit
-        run: |
-          # Adiciona todos os arquivos JSON que foram alterados pelo game.js
-          git add --all nations/*.json
-          
-          # Verifica se há algo para commitar
-          if git diff --staged --quiet; then
-            echo "pode_commitar=false" >> $GITHUB_OUTPUT
-            echo "Nenhuma mudança nas nações para commitar."
-          else
-            echo "pode_commitar=true" >> $GITHUB_OUTPUT
-            git commit -m "🤖 Turno Global: Estatísticas Atualizadas [skip ci]"
-            echo "Alterações committadas com sucesso."
-          fi
-          
-      # Passo 7: Enviar as alterações para o repositório
-      - name: Fazer Push das Mudanças
-        # Só faz o push se o passo 6 tiver detectado alterações
-        if: steps.commit.outputs.pode_commitar == 'true'
-        run: git push
-        uses: actions/setup-node@v4
+      - name: 🎮 Executar o Motor de Simulação
+        run: node js/game.js
+
+      - name: 💾 Commit das Estatísticas Atualizadas
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          node-version: '20' 
-          
-      # Passo 3: Instalar as dependências do projeto (se houver, como 'node-fetch' para o JS)
-      # Se você usar 'fetch' nativo do Node 18+, pode pular esta etapa ou usar 'npm install'.
-      - name: Instalar Dependências (Simulado)
-        run: echo "Nenhuma dependência instalada no momento."
-        # run: npm install
-
-      # Passo 4: Rodar o script principal de simulação
-      - name: Executar o Turno Global (Node.js)
-        # Chamamos o script game.js e a função runGlobalTurn
-        # Usamos 'node' para executar o JS diretamente.
-        # Você deve garantir que 'js/game.js' tenha um método que possa ser chamado/exportado
-        # para iniciar o runGlobalTurn, ou apenas executar o arquivo.
-        run: |
-          # Simulação: Criar um wrapper para executar a função que precisa rodar
-          # Aqui, usaremos o Node para executar um pequeno script que importa e roda a função:
-          echo "Rodando simulação..."
-          node -e '
-            const { runGlobalTurn } = require("./js/game.js");
-            runGlobalTurn().catch(err => {
-              console.error("Erro no Turno Global:", err);
-              process.exit(1);
-            });
-          '
-          
-      # Passo 5: Configurar o usuário Git (para o commit)
-      - name: Configurar Credenciais do Git
-        run: |
-          git config user.name "GitNations Bot (Ação Automatizada)"
-          git config user.email "gitnations-bot@users.noreply.github.com"
-
-      # Passo 6: Verificar e Commitar as Mudanças (as atualizações dos JSONs)
-      - name: Commitar Atualizações de Estatísticas
-        id: commit
-        run: |
-          # Adiciona todos os arquivos JSON que foram alterados pelo game.js
-          git add --all nations/*.json
-          
-          # Verifica se há algo para commitar
-          if git diff --staged --quiet; then
-            echo "::set-output name=pode_commitar::false"
-            echo "Nenhuma mudança nas nações para commitar."
-          else
-            echo "::set-output name=pode_commitar::true"
-            git commit -m "🤖 Turno Global: Estatísticas Atualizadas [skip ci]"
-            echo "Alterações committadas com sucesso."
-          fi
-          
-      # Passo 7: Enviar as alterações para o repositório
-      - name: Fazer Push das Mudanças
-        # Só faz o push se o passo 6 tiver detectado alterações
-        if: steps.commit.outputs.pode_commitar == 'true'
-        run: git push
+          commit_message: '⚙️ Turno Global: Estatísticas das Nações Atualizadas'
+          # Adiciona apenas os arquivos JSON alterados
+          files: nations/*.json
+          # Configuração para o bot de commit
+          commit_user_name: GitNations Bot
+          commit_user_email: actions@github.com
