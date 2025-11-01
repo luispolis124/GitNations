@@ -12,11 +12,11 @@ on:
   workflow_dispatch:
 
 # 2. Permissões
-# É crucial dar permissão de leitura para o GitHub Pages Actions
+# O GitHub precisa dessas permissões específicas para o Pages funcionar corretamente.
 permissions:
   contents: read
-  pages: write # Permissão necessária para implantar no GitHub Pages
-  id-token: write # Necessário para autenticação com o OIDC
+  pages: write 
+  id-token: write 
 
 # 3. Definição do Job
 jobs:
@@ -24,8 +24,9 @@ jobs:
   deploy:
     name: Implantação Estática
     environment:
+      # O ambiente deve ser 'github-pages' para o GitHub reconhecer o deploy
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }} # URL do site publicado
+      url: ${{ steps.deployment.outputs.page_url }} 
     runs-on: ubuntu-latest
 
     steps:
@@ -33,8 +34,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Passo 2: Configurar o Node.js (necessário apenas se você for usar Webpack ou Grunt - Opcional)
-      # Se você não tem etapa de build (o HTML/CSS/JS já está pronto), pode pular a instalação
+      # Passo 2 (Opcional): Configurar o Node.js. Mantido apenas se você for usar um build.
       - name: Configurar Node.js (Opcional)
         uses: actions/setup-node@v4
         with:
@@ -42,27 +42,26 @@ jobs:
 
       # Passo 3: Configurar o GitHub Pages
       - name: Configurar GitHub Pages
+        # Este action configura os caminhos e variáveis necessários
         uses: actions/configure-pages@v4
         
-      # Passo 4: Fazer o build dos assets (Se você usar Grunt ou Webpack)
-      # Se o seu site for puramente HTML/CSS/JS sem compilação, você pode remover este passo
+      # Passo 4 (Opcional): Etapa de Build
       - name: Build do Projeto (Opcional - Remova se for 100% estático)
         run: |
-          npm install
-          # Se você usar Webpack, Grunt ou outro build, o comando estaria aqui
-          # Ex: npm run build 
-          echo "Nenhuma etapa de build necessária, usando arquivos estáticos."
+          # Se o seu site for puramente HTML/CSS/JS, esta etapa não faz nada além de confirmar
+          echo "Nenhuma etapa de build complexa, usando arquivos estáticos da raiz."
 
-      # Passo 5: Enviar os arquivos para o GitHub Pages
-      # O action 'upload-pages-artifact' espera que os arquivos estejam prontos para serem servidos
+      # Passo 5: Enviar os arquivos para o GitHub Pages como um artefato
+      # O action 'upload-pages-artifact' pega o conteúdo da pasta 'path' 
+      # e o prepara para ser servido.
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # A pasta que contém o index.html, ranking.html, js/, css/, etc.
-          # Assumimos que a raiz do seu repositório é onde o site está
+          # A pasta que será publicada. Assumimos a raiz do repositório
           path: './' 
 
       # Passo 6: Publicar o Site
       - name: Implantar no GitHub Pages
         id: deployment
+        # Este action finaliza o processo e coloca o site online
         uses: actions/deploy-pages@v4
