@@ -28,13 +28,31 @@
                     <option value="Democracia">Democracia</option>
                     <option value="Monarquia">Monarquia</option>
                     <option value="Ditadura">Ditadura</option>
-                    </select>
+                    <option value="Anarquia">Anarquia (Risco Alto)</option>
+                    <option value="Tecnocracia">Tecnocracia</option>
+                    <option value="Oligarquia">Oligarquia</option>
+                </select>
+
+                <label for="proprietario-github">Seu Username GitHub:</label>
+                <input type="text" id="proprietario-github" placeholder="@seu_username" required>
+            </fieldset>
+
+            <fieldset>
+                <legend>Configurações Iniciais</legend>
+                <label for="populacao-inicial">População Inicial (Mínimo 5M):</label>
+                <input type="number" id="populacao-inicial" value="5000000" min="5000000" step="1000000">
+
+                <label for="pib-inicial">PIB Inicial (Mínimo $20B):</label>
+                <input type="number" id="pib-inicial" value="20000000000" min="20000000000" step="1000000000">
+
+                <label for="imposto-inicial">Imposto Base Inicial (0.05 a 0.50):</label>
+                <input type="number" id="imposto-inicial" value="0.10" min="0.05" max="0.50" step="0.01">
             </fieldset>
 
             <fieldset>
                 <legend>Símbolos Nacionais</legend>
-                <label for="bandeira">Bandeira (Reupload/URL):</label>
-                <input type="file" id="bandeira" accept="image/*">
+                <label for="bandeira">URL da Bandeira (Ex: Link para Imagem no seu Fork):</label>
+                <input type="url" id="bandeira-url">
                 <div id="bandeira-preview"></div>
                 
                 <label for="lema">Lema Nacional:</label>
@@ -44,11 +62,10 @@
                 <input type="url" id="hino">
             </fieldset>
 
-            <button type="submit">Fundar Nação e Enviar ao CGG (Pull Request)</button>
+            <button type="submit">Fundar Nação e Gerar Arquivo (Passo 1)</button>
         </form>
     </main>
     
     <script src="../js/creation_nation_user.js"></script>
-    <script src="../js/nation_users.js"></script>
-</body>
+    </body>
 </html>
